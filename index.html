@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوت سونغ | Bot Sung</title>
+    <title>بوت سونغ جين وو | Song Jin Woo</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    
     <style>
-        /* الإعدادات الأساسية */
+        /* أنيميشن لظهور العناصر */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            background-color: #0f172a; /* لون خلفية داكن */
+            background-color: #020617; 
+            background-image: radial-gradient(circle at top, #1e1b4b 0%, #020617 100%);
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -20,81 +25,85 @@
             min-height: 100vh;
         }
 
-        /* حاوية المحتوى */
         .container {
             width: 100%;
             max-width: 400px;
-            padding: 20px;
+            padding: 40px 20px;
             text-align: center;
-            margin-top: 50px;
             box-sizing: border-box;
         }
 
-        /* صورة البوت أو الشعار */
         .profile-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+            width: 160px;
+            height: 160px;
+            border-radius: 25px;
             object-fit: cover;
-            border: 3px solid #3b82f6; /* إطار أزرق */
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); /* تأثير توهج */
+            border: 2px solid #6366f1;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+            animation: fadeInUp 0.8s ease forwards;
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #f8fafc;
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease forwards;
         }
 
-        p {
+        .description {
             font-size: 15px;
             color: #94a3b8;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1.2s ease forwards;
         }
 
-        /* تصميم الأزرار */
         .btn {
             display: block;
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             margin-bottom: 15px;
-            background-color: #1e293b;
+            background: rgba(30, 41, 59, 0.5);
             color: #ffffff;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
+            border-radius: 15px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-sizing: border-box;
+            opacity: 0; /* للأنيميشن */
+            animation: fadeInUp 0.5s ease forwards;
         }
 
-        /* تأثير عند تمرير الماوس على الزر */
+        /* توقيت ظهور الأزرار واحد تلو الآخر */
+        .btn:nth-child(4) { animation-delay: 1.4s; }
+        .btn:nth-child(5) { animation-delay: 1.6s; }
+        .btn:nth-child(6) { animation-delay: 1.8s; }
+        .btn:nth-child(7) { animation-delay: 2.0s; }
+
         .btn:hover {
-            background-color: #3b82f6;
-            border-color: #3b82f6;
-            transform: translateY(-4px); /* ارتفاع الزر للأعلى قليلاً */
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            background: #6366f1;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+            border-color: #fff;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <img src="https://i.imgur.com/your-image-link.jpg" alt="صورة البوت" class="profile-img">
+        <img src="photo_5821173209150196869_y.jpg" alt="Song Jin Woo" class="profile-img">
         
         <h1>بوت سونغ جين وو</h1>
-        <p>مرحباً بك! اختر من القائمة أدناه للوصول السريع.</p>
+        <p class="description">استعد للارتقاء بمستواك.. تحكم بكل شيء من هنا.</p>
 
-        <a href="#" class="btn">ℹ️ معلومات عن بوت سونغ</a>
-        
+        <a href="#" class="btn">ℹ️ معلومات عن البوت</a>
         <a href="#" class="btn">🧪 رابط مجموعة الاختبار</a>
-        
-        <a href="#" class="btn">📢 رابط القناة</a>
-        
-        <a href="#" class="btn">💬 تواصل معنا</a>
-        
+        <a href="#" class="btn">📢 رابط القناة الرسمية</a>
+        <a href="#" class="btn">✉️ تواصل معنا</a>
     </div>
 
 </body>
