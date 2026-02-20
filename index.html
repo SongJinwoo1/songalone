@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوت سونغ جين وو | Song Jin Woo</title>
+    <title>بوت سونغ جين وو | BOT SONG JIN WOO</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* أنيميشن لظهور العناصر */
+        /* أنيميشن الظهور */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shadowPulse {
+            0% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.7); }
+            100% { box-shadow: 0 0 15px rgba(99, 102, 241, 0.4); }
         }
 
         body {
@@ -23,11 +29,12 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
             padding: 40px 20px;
             text-align: center;
             box-sizing: border-box;
@@ -36,60 +43,121 @@
         .profile-img {
             width: 160px;
             height: 160px;
-            border-radius: 25px;
+            border-radius: 20px;
             object-fit: cover;
             border: 2px solid #6366f1;
-            margin-bottom: 20px;
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
-            animation: fadeInUp 0.8s ease forwards;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.8s ease forwards, shadowPulse 3s infinite;
         }
 
         h1 {
             font-size: 28px;
-            margin-bottom: 10px;
-            background: linear-gradient(to bottom, #fff, #94a3b8);
+            margin: 5px 0;
+            background: linear-gradient(to right, #fff, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: fadeInUp 1s ease forwards;
         }
 
-        .description {
-            font-size: 15px;
-            color: #94a3b8;
-            margin-bottom: 40px;
-            animation: fadeInUp 1.2s ease forwards;
+        .rank-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #4338ca, #7e22ce);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 5px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border: 1px solid #a855f7;
+            animation: fadeInUp 1.1s ease forwards;
         }
 
+        /* الأزرار الأساسية */
         .btn {
             display: block;
             width: 100%;
             padding: 18px;
             margin-bottom: 15px;
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(15, 23, 42, 0.8);
             color: #ffffff;
             text-decoration: none;
             font-size: 17px;
             font-weight: 700;
-            border-radius: 15px;
+            border-radius: 12px;
             border: 1px solid rgba(99, 102, 241, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-sizing: border-box;
-            opacity: 0; /* للأنيميشن */
+            opacity: 0;
             animation: fadeInUp 0.5s ease forwards;
         }
 
-        /* توقيت ظهور الأزرار واحد تلو الآخر */
-        .btn:nth-child(4) { animation-delay: 1.4s; }
-        .btn:nth-child(5) { animation-delay: 1.6s; }
-        .btn:nth-child(6) { animation-delay: 1.8s; }
-        .btn:nth-child(7) { animation-delay: 2.0s; }
-
         .btn:hover {
-            background: #6366f1;
+            background: #4f46e5;
             transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
             border-color: #fff;
         }
+
+        /* أزرار المطورين */
+        .dev-btns {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+            animation-delay: 1.6s;
+        }
+        
+        .btn-dev {
+            flex: 1;
+            padding: 12px;
+            font-size: 14px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px dashed #6366f1;
+            margin-bottom: 0;
+        }
+
+        /* كارت القوانين */
+        .rules-card {
+            background: rgba(2, 6, 23, 0.9);
+            border-right: 4px solid #6366f1;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 35px;
+            text-align: right;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+            animation-delay: 2s;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+            font-size: 14.5px;
+            color: #e2e8f0;
+            line-height: 2;
+        }
+
+        .rules-list li::before { 
+            content: "⚔️"; 
+            margin-left: 10px; 
+        }
+
+        .final-warning {
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(220, 38, 38, 0.1);
+            color: #f87171;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid rgba(220, 38, 38, 0.2);
+        }
+
+        /* مواعيد الأنيميشن */
+        .btn:nth-child(4) { animation-delay: 1.2s; }
+        .btn:nth-child(5) { animation-delay: 1.4s; }
     </style>
 </head>
 <body>
@@ -97,13 +165,29 @@
     <div class="container">
         <img src="photo_5821173209150196869_y.jpg" alt="Song Jin Woo" class="profile-img">
         
-        <h1>بوت سونغ جين وو</h1>
-        <p class="description">استعد للارتقاء بمستواك.. تحكم بكل شيء من هنا.</p>
+        <h1>BOT SONG JIN WOO</h1>
+        <div class="rank-badge">RANK: S-CLASS | FREE</div>
 
-        <a href="#" class="btn">ℹ️ معلومات عن البوت</a>
-        <a href="#" class="btn">🧪 رابط مجموعة الاختبار</a>
-        <a href="#" class="btn">📢 رابط القناة الرسمية</a>
-        <a href="#" class="btn">✉️ تواصل معنا</a>
+        <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" target="_blank" class="btn">🛡️ ساحة الاختبار (المجموعة)</a>
+        <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" target="_blank" class="btn">🦅 فيلق الظلال (القناة)</a>
+
+        <div class="dev-btns">
+            <a href="https://wa.me/201055719273" target="_blank" class="btn btn-dev">🛠️ المطور 1</a>
+            <a href="https://wa.me/96597805334" target="_blank" class="btn btn-dev">🛠️ المطور 2</a>
+        </div>
+
+        <div class="rules-card">
+            <h2 style="font-size: 19px; color: #a855f7; margin-bottom: 15px;">📜 ميثاق قوانين الظلال</h2>
+            <ul class="rules-list">
+                <li>البوت مجاني تماماً، العظمة لا تُشترى بالمال.</li>
+                <li>يُمنع محاولة العبث بالنظام أو التخريب.</li>
+                <li>الاحترام المتبادل هو جوهر القوة في فيلقنا.</li>
+                <li>للمطورين الحق الكامل في نفي أي متجاوز فوراً.</li>
+            </ul>
+            <div class="final-warning">
+                ⚠️ لو لاحظنا أنك خالفت شرطاً سوف نسحب البوت منك فوراً!
+            </div>
+        </div>
     </div>
 
 </body>
