@@ -3,174 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨 | 𝕊𝕪𝕤𝕥𝕖𝕞 v5.0</title>
+    <title>𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨 | 𝕊𝕪𝕤𝕥𝕖𝕞</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --shadow-purple: #7c3aed;
             --main-glow: #a855f7;
             --dark-bg: #05011a;
-            --sidebar-bg: rgba(10, 10, 30, 0.98);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --sidebar-width: 280px;
         }
 
-        body { margin: 0; background: var(--dark-bg); color: white; font-family: 'Cairo', sans-serif; display: flex; height: 100vh; overflow: hidden; }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0; background: var(--dark-bg); color: white;
+            font-family: 'Cairo', sans-serif; overflow: hidden; display: flex;
+        }
+
         canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-        /* Sidebar المطور */
-        .sidebar { width: 260px; background: var(--sidebar-bg); border-left: 1px solid rgba(124, 58, 237, 0.3); display: flex; flex-direction: column; padding: 20px; transition: 0.3s; z-index: 100; }
-        .nav-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 10px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.02); font-size: 14px; border: 1px solid transparent; }
-        .nav-item:hover, .nav-item.active { background: rgba(124, 58, 237, 0.2); border-color: var(--shadow-purple); color: var(--main-glow); }
+        /* Sidebar - اللوحة الجانبية */
+        .sidebar {
+            width: var(--sidebar-width); height: 100vh; background: rgba(10, 10, 30, 0.98);
+            border-left: 1px solid rgba(124, 58, 237, 0.3); display: flex; flex-direction: column;
+            padding: 20px; transition: 0.4s; z-index: 1000;
+        }
 
-        /* Main Content */
-        .main-content { flex: 1; padding: 30px; overflow-y: auto; position: relative; scroll-behavior: smooth; }
-        .page { display: none; width: 100%; max-width: 850px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+        .nav-item {
+            padding: 15px; margin-bottom: 8px; border-radius: 12px; cursor: pointer;
+            transition: 0.3s; display: flex; align-items: center; gap: 12px;
+            background: rgba(255,255,255,0.02); border: 1px solid transparent; font-size: 14px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(124, 58, 237, 0.15); border-color: var(--shadow-purple);
+            color: var(--main-glow); transform: translateX(-5px);
+        }
+
+        /* Content Area */
+        .main-content {
+            flex: 1; padding: 40px; overflow-y: auto; scroll-behavior: smooth;
+        }
+
+        .page { display: none; width: 100%; max-width: 900px; margin: 0 auto; animation: slideUp 0.5s ease; }
         .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Cards & Features */
-        .feature-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(124, 58, 237, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 20px; border-right: 4px solid var(--shadow-purple); }
-        .feature-card h3 { margin-top: 0; color: var(--main-glow); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Command Table */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; }
-        th, td { padding: 12px; text-align: right; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        th { background: var(--shadow-purple); color: white; font-size: 14px; }
-        td { font-size: 13px; color: #cbd5e1; }
+        /* Dashboard Cards */
+        .card {
+            background: var(--glass-bg); border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 25px; border-radius: 20px; margin-bottom: 20px; backdrop-filter: blur(10px);
+        }
 
-        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 10px; background: #10b981; color: white; margin-bottom: 10px; }
+        .card h2 { color: var(--main-glow); margin-top: 0; display: flex; align-items: center; gap: 10px; }
 
-        @media (max-width: 768px) { .sidebar { position: fixed; right: -260px; height: 100%; } .sidebar.open { right: 0; } }
+        /* Responsive UI */
+        .menu-btn {
+            display: none; position: fixed; top: 20px; right: 20px;
+            z-index: 1100; background: var(--shadow-purple); color: white;
+            border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar { position: fixed; right: -100%; }
+            .sidebar.open { right: 0; }
+            .menu-btn { display: block; }
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block; padding: 12px 25px; border-radius: 10px;
+            text-decoration: none; font-weight: bold; transition: 0.3s;
+            cursor: pointer; text-align: center; border: none;
+        }
+        .btn-primary { background: var(--shadow-purple); color: white; }
+        .btn-primary:hover { box-shadow: 0 0 20px var(--shadow-purple); }
+
+        /* Tables for Commands/Laws */
+        .data-table {
+            width: 100%; border-collapse: collapse; margin-top: 15px;
+        }
+        .data-table th { background: rgba(124, 58, 237, 0.2); padding: 12px; text-align: right; color: var(--main-glow); }
+        .data-table td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+
     </style>
 </head>
 <body>
 
+    <button class="menu-btn" onclick="toggleSidebar()">☰ القائمة</button>
+    <canvas id="particles"></canvas>
+
     <aside class="sidebar" id="sidebar">
-        <div style="text-align:center; margin-bottom: 30px;">
-            <img src="photo_5821173209150196869_y.jpg" style="width:70px; border-radius:15px; border:2px solid var(--shadow-purple);">
-            <h4 style="margin:10px 0; color:var(--main-glow);">𝕊𝕪𝕤𝕥𝕖𝕞 ℂ𝕠𝕟𝕥𝕣𝕠𝕝</h4>
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="photo_5821173209150196869_y.jpg" style="width: 80px; border-radius: 20px; border: 2px solid var(--shadow-purple);">
+            <h3 style="margin-top: 10px; font-size: 16px;">𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨</h3>
         </div>
         <nav>
-            <div class="nav-item active" onclick="switchPage('home')">🏠 لوحة التحكم</div>
-            <div class="nav-item" onclick="switchPage('guide')">📖 دليل الاستخدام</div>
+            <div class="nav-item active" onclick="switchPage('home')">🏠 الرئيسية</div>
+            <div class="nav-item" onclick="switchPage('how-to')">📖 دليل البدء السريع</div>
             <div class="nav-item" onclick="switchPage('commands')">📜 قائمة الأوامر</div>
-            <div class="nav-item" onclick="switchPage('features')">💎 ميزات النخبة</div>
-            <div class="nav-item" onclick="switchPage('about')">👤 فريق التطوير</div>
-            <div class="nav-item" onclick="switchPage('support')">🛠️ الدعم والتبليغ</div>
+            <div class="nav-item" onclick="switchPage('laws')">⚖️ القوانين والخصوصية</div>
+            <div class="nav-item" onclick="switchPage('dev')">👤 سيد الظلال (المطور)</div>
         </nav>
     </aside>
 
     <main class="main-content">
-        <canvas id="particles"></canvas>
-
         <div id="home" class="page active">
-            <span class="status-badge">SYSTEM ONLINE: S-RANK</span>
-            <h1>مرحباً بك، أيها الصياد 🌑</h1>
-            <div class="feature-card">
-                <h3>نظرة عامة على النظام</h3>
-                <p>بوت سونغ جين وو هو نظام استدعاء واتساب متكامل يوفر لك السيطرة الكاملة على مجموعاتك مع أدوات ذكاء اصطناعي متطورة. تم تصميم الموقع ليكون مرجعك الأول لفهم قدرات الفيلق.</p>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="feature-card" style="border-right-color: #3b82f6;">
-                    <h4>ساحة الاختبار</h4>
-                    <p style="font-size: 12px;">جرب الأوامر مباشرة في المجموعة الرسمية قبل إضافته لمجموعتك.</p>
-                    <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" style="color:#3b82f6; text-decoration:none; font-weight:bold;">انضم الآن ←</a>
-                </div>
-                <div class="feature-card" style="border-right-color: #10b981;">
-                    <h4>قناة التحديثات</h4>
-                    <p style="font-size: 12px;">اشترك لتلقي إشعارات سجل التغييرات (Changelog) فور صدورها.</p>
-                    <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" style="color:#10b981; text-decoration:none; font-weight:bold;">تابع القناة ←</a>
+            <h1>مرحباً بك في نظام السيادة 🌑</h1>
+            <div class="card">
+                <h2>⚡ حالة النظام</h2>
+                <p>البوت يعمل حالياً بكفاءة <b>S-Rank</b>. تم تحديث خوارزميات الاستجابة لتعمل بسرعة أقل من 0.3 ثانية.</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="btn btn-primary">دخول ساحة الاختبار</a>
+                    <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" class="btn" style="background: #1e293b; color: white;">قناة الأخبار</a>
                 </div>
             </div>
         </div>
 
-        <div id="guide" class="page">
-            <h2>📖 كيف تبدأ رحلة الترقية؟</h2>
-            <div class="feature-card">
-                <p>1. <b>الإضافة:</b> اطلب من المطور إضافة رقم البوت لمجموعتك.</p>
-                <p>2. <b>الترقية:</b> يجب رفع البوت "مشرف" (Admin) ليعمل نظام الحماية.</p>
-                <p>3. <b>التفعيل:</b> اكتب أمر <code>.الاوامر</code> للبدء.</p>
-            </div>
-            <h3>🎥 فيديو توضيحي</h3>
-            <div style="width:100%; height:300px; background:#000; border-radius:15px; display:flex; align-items:center; justify-content:center; border:1px solid var(--shadow-purple);">
-                <p style="color:#555;">[ هنا يتم وضع رابط الفيديو التوضيحي ]</p>
+        <div id="how-to" class="page">
+            <h2>📖 دليل البدء السريع</h2>
+            <div class="card">
+                <p>1️⃣ <b>أضف البوت:</b> قم بإضافة رقم البوت إلى مجموعتك.</p>
+                <p>2️⃣ <b>الترقية:</b> قم برفع البوت كمشرف (Admin) لتفعيل ميزات الحماية.</p>
+                <p>3️⃣ <b>التفعيل:</b> أرسل <code>.الاوامر</code> لرؤية ما يمكن للنظام فعله.</p>
             </div>
         </div>
 
         <div id="commands" class="page">
-            <h2>📜 قائمة بروتوكولات النظام</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>الأمر</th>
-                        <th>الوظيفة</th>
-                        <th>الفئة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>.طرد</td><td>طرد عضو مخالف</td><td>إدارة</td></tr>
-                    <tr><td>.ذكاء</td><td>تحدث مع AI سونغ</td><td>ذكاء اصطناعي</td></tr>
-                    <tr><td>.بحث</td><td>البحث في الويب</td><td>أدوات</td></tr>
-                    <tr><td>.صورة</td><td>توليد صور بالذكاء الاصطناعي</td><td>إبداع</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div id="features" class="page">
-            <h2>💎 ميزات فريدة (S-Rank Features)</h2>
-            <div class="feature-card">
-                <h3>🛡️ حماية الظلال (Anti-Link)</h3>
-                <p>نظام رادع يقوم بحذف الروابط المزعجة تلقائياً وطرد الحسابات الوهمية لحماية خصوصية أعضاء الفيلق.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🧠 المعالج السحابي</h3>
-                <p>يستخدم البوت محركات ذكاء اصطناعي تفاعلية تساعدك في تحليل النصوص، الإجابة على الأسئلة المعقدة، وحتى توليد الأكواد البرمجية.</p>
+            <h2>📜 بروتوكولات الأوامر</h2>
+            <div class="card">
+                <table class="data-table">
+                    <thead><tr><th>الأمر</th><th>الوصف</th></tr></thead>
+                    <tbody>
+                        <tr><td>.ذكاء</td><td>فتح بوابة الحوار مع AI سونغ</td></tr>
+                        <tr><td>.طرد</td><td>نفي العضو المخالف من الفيلق</td></tr>
+                        <tr><td>.صورة</td><td>تجسيد خيالك عبر الذكاء الاصطناعي</td></tr>
+                        <tr><td>.حماية</td><td>تفعيل درع الحماية من الروابط</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div id="about" class="page">
-            <h2>👤 العقل المدبر</h2>
-            <div class="feature-card" style="text-align:center;">
-                <img src="photo_5821173209150196869_y.jpg" style="width:120px; border-radius:50%; border:3px solid var(--main-glow);">
+        <div id="laws" class="page">
+            <h2>⚖️ قوانين استخدام النظام</h2>
+            <div class="card">
+                <h3>🛡️ سياسة الاستخدام</h3>
+                <p>يُمنع استخدام البوت في إرسال محتوى مسيء أو محاولة تخريب سيرفرات النظام. المخالفة تعني "النفي" (الحظر) الدائم.</p>
+                <h3>🔒 الخصوصية</h3>
+                <p>نحن لا نقوم بتخزين محادثاتك الشخصية. يتم معالجة البيانات لحظياً لتنفيذ الأوامر فقط.</p>
+            </div>
+        </div>
+
+        <div id="dev" class="page">
+            <h2>👤 سيد الظلال (المطور)</h2>
+            <div class="card" style="text-align: center;">
+                <img src="photo_5821173209150196869_y.jpg" style="width: 120px; border-radius: 50%; border: 3px solid var(--main-glow);">
                 <h3>𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</h3>
-                <p>المطور الرئيسي والمؤسس لفيلق الظلال البرمجي.</p>
+                <p>المطور الوحيد والمسؤول عن استقرار النظام.</p>
+                <a href="https://wa.me/96597805334" class="btn btn-primary" style="background: #25d366;">تواصل واتساب (الكويت)</a>
             </div>
-        </div>
-
-        <div id="support" class="page">
-            <h2>🛠️ مركز الدعم والتبليغ</h2>
-            <p>هل واجهت خللاً في النظام؟ استدعِ المطور فوراً عبر الواتساب:</p>
-            <a href="https://wa.me/96597805334" style="background:#25d366; padding:15px 40px; border-radius:10px; color:white; text-decoration:none; font-weight:bold; display:inline-block;">
-                تواصل مع المطور (الكويت)
-            </a>
         </div>
     </main>
 
     <script>
+        // تبديل الصفحات
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             event.currentTarget.classList.add('active');
+            if (window.innerWidth <= 992) toggleSidebar();
         }
 
+        // لوحة الموبايل
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // تأثير الجزيئات
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        let pArr = [];
-        class P {
+        let particles = [];
+        class Particle {
             constructor() {
-                this.x = Math.random()*canvas.width;
-                this.y = Math.random()*canvas.height;
-                this.s = Math.random()*1.5+0.5;
-                this.vX = Math.random()*0.4-0.2;
-                this.vY = Math.random()*0.4-0.2;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.vX = Math.random() * 0.5 - 0.25;
+                this.vY = Math.random() * 0.5 - 0.25;
             }
-            update() { this.x+=this.vX; this.y+=this.vY; }
-            draw() { ctx.fillStyle = 'rgba(168, 85, 247, 0.4)'; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); }
+            draw() {
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            update() {
+                this.x += this.vX; this.y += this.vY;
+                if (this.x > canvas.width || this.x < 0) this.vX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.vY *= -1;
+            }
         }
-        function init() { for(let i=0; i<80; i++) pArr.push(new P()); }
-        function anim() { ctx.clearRect(0,0,canvas.width, canvas.height); pArr.forEach(p=>{p.update(); p.draw();}); requestAnimationFrame(anim); }
+        function init() { for (let i = 0; i < 100; i++) particles.push(new Particle()); }
+        function anim() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(anim);
+        }
         init(); anim();
     </script>
 </body>
