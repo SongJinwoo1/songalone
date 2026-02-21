@@ -3,192 +3,233 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨 - السيادة المطلقة على الواتساب">
-    <title>𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨</title>
+    <title>𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨 | 𝕊𝕪𝕤𝕥𝕖𝕞</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --shadow-purple: #6d28d9;
-            --deep-black: #020617;
-            --text-glow: #a855f7;
+            --shadow-purple: #7c3aed;
+            --main-glow: #a855f7;
+            --dark-bg: #030014;
         }
 
-        /* أنيميشن الهالة الأرجوانية المتحركة */
-        @keyframes aura {
-            0% { box-shadow: 0 0 20px #4c1d95; }
-            50% { box-shadow: 0 0 50px var(--shadow-purple); }
-            100% { box-shadow: 0 0 20px #4c1d95; }
-        }
-
-        @keyframes glitch {
-            0% { text-shadow: 2px 0 0 red, -2px 0 0 blue; }
-            50% { text-shadow: -2px 0 0 red, 2px 0 0 blue; }
-            100% { text-shadow: 2px 0 0 red, -2px 0 0 blue; }
-        }
-
+        /* تأثير الخلفية المتحركة */
         body {
             margin: 0;
-            background-color: var(--deep-black);
-            color: #e2e8f0;
+            background: var(--dark-bg);
+            color: white;
             font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 50% -20%, #1e1b4b 0%, transparent 50%),
-                radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 30%);
         }
 
-        .container {
-            width: 100%;
-            max-width: 500px;
-            padding: 50px 20px;
+        canvas {
+            position: fixed;
+            top: 0; left: 0;
+            z-index: -1;
+        }
+
+        /* الهيكل الرئيسي */
+        .dashboard {
+            width: 90%;
+            max-width: 1000px;
+            margin-top: 50px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* رأس الصفحة (الهوية) */
+        header {
             text-align: center;
-        }
-
-        .profile-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 30px;
-        }
-
-        .profile-img {
-            width: 170px;
-            height: 170px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            backdrop-filter: blur(10px);
             border-radius: 30px;
-            border: 1px solid var(--shadow-purple);
-            filter: grayscale(30%);
-            animation: aura 4s infinite ease-in-out;
-            object-fit: cover;
-        }
-
-        .system-title {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #fff;
-            margin: 10px 0;
-            text-transform: uppercase;
-        }
-
-        .dev-name {
-            color: var(--text-glow);
-            font-size: 18px;
-            opacity: 0.8;
             margin-bottom: 30px;
         }
 
-        /* أزرار النظام */
-        .system-btn {
-            display: block;
-            width: 100%;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid #1e293b;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            position: relative;
+        .avatar {
+            width: 150px; height: 150px;
+            border-radius: 20px;
+            border: 2px solid var(--shadow-purple);
+            box-shadow: 0 0 30px var(--shadow-purple);
             transition: 0.5s;
+        }
+        .avatar:hover { transform: scale(1.1) rotate(5deg); }
+
+        h1 {
+            font-size: 35px;
+            margin: 15px 0;
+            letter-spacing: 2px;
+            background: linear-gradient(to bottom, #fff, var(--main-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* شبكة المميزات (النظام الواسع) */
+        .system-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .system-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 20px;
+            transition: 0.4s;
+            position: relative;
             overflow: hidden;
-            clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%);
         }
 
-        .system-btn:hover {
-            background: var(--shadow-purple);
-            color: #000;
-            transform: skewX(-5deg);
-            box-shadow: -10px 0 20px var(--shadow-purple);
+        .system-card:hover {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: var(--shadow-purple);
+            transform: translateY(-5px);
         }
 
-        .system-btn::before {
-            content: "[ ACCESS ]";
-            position: absolute;
-            left: 10px;
-            font-size: 10px;
-            opacity: 0.5;
-        }
+        .system-card h3 { color: var(--main-glow); margin-top: 0; }
 
-        /* كارت الميثاق */
-        .mيثاق-card {
-            margin-top: 50px;
-            padding: 30px;
-            background: linear-gradient(145deg, #0f172a, #020617);
-            border: 1px solid #1e293b;
-            text-align: right;
-            border-left: 5px solid var(--shadow-purple);
-        }
-
-        .mيثاق-card h2 {
-            color: var(--text-glow);
-            font-size: 20px;
-            border-bottom: 1px solid #1e293b;
-            padding-bottom: 10px;
-        }
-
-        .rules-list {
-            list-style: none;
-            padding: 0;
-            font-size: 14px;
-            line-height: 2.2;
-            color: #94a3b8;
-        }
-
-        .warning {
-            color: #ef4444;
+        /* الأزرار الاحترافية */
+        .action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: linear-gradient(45deg, #1e1b4b, #4c1d95);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
             font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-            border: 1px solid #ef4444;
-            padding: 10px;
-            font-size: 12px;
+            margin-top: 10px;
+            border: 1px solid var(--shadow-purple);
+            transition: 0.3s;
+        }
+        .action-btn:hover {
+            box-shadow: 0 0 20px var(--shadow-purple);
+            filter: brightness(1.2);
         }
 
-        footer {
-            margin-top: 50px;
-            padding: 20px;
-            font-size: 10px;
-            color: #334155;
-            letter-spacing: 3px;
+        /* ميثاق الظلال */
+        .rules-section {
+            margin-top: 40px;
+            background: rgba(255, 0, 0, 0.02);
+            border: 1px solid rgba(255, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: right;
+        }
+
+        .rules-section h2 { color: #f87171; border-bottom: 1px solid rgba(248, 113, 113, 0.2); padding-bottom: 10px; }
+
+        .warning-footer {
+            margin-top: 20px;
+            color: #ef4444;
+            font-size: 13px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="profile-container">
-            <img src="photo_5821173209150196869_y.jpg" alt="Song" class="profile-img">
+    <canvas id="particles"></canvas>
+
+    <div class="dashboard">
+        <header>
+            <img src="photo_5821173209150196869_y.jpg" alt="Song" class="avatar">
+            <h1>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</h1>
+            <div style="color: var(--main-glow); font-weight: bold;">[ 𝕄𝕒𝕤𝕥𝕖𝕣: 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐 ]</div>
+        </header>
+
+        <div class="system-grid">
+            <div class="system-card">
+                <h3>⚡ حالة النظام</h3>
+                <p>البوت يعمل بكفاءة 100%. نظام الاستدعاء جاهز لتنفيذ الأوامر في محادثات الواتساب.</p>
+                <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="action-btn">دخول ساحة الاختبار</a>
+            </div>
+
+            <div class="system-card">
+                <h3> Eagle Eye 🦅</h3>
+                <p>تابع تحركات الظلال وآخر التحديثات البرمجية فور صدورها من القناة الرسمية.</p>
+                <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" class="action-btn">قناة الأخبار</a>
+            </div>
+
+            <div class="system-card" style="grid-column: span 1;">
+                <h3>🛠️ استدعاء المطورين</h3>
+                <div style="display: flex; gap: 10px;">
+                    <a href="https://wa.me/201055719273" class="action-btn" style="flex:1">مطور I</a>
+                    <a href="https://wa.me/96597805334" class="action-btn" style="flex:1">مطور II</a>
+                </div>
+            </div>
         </div>
 
-        <div class="system-title">𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</div>
-        <div class="dev-name">𝕄𝕒𝕤𝕥𝕖𝕣: 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</div>
-
-        <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="system-btn">ساحة الاختبار</a>
-        <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" class="system-btn">قناة أخبار الظلال</a>
-        
-        <div style="display: flex; gap: 10px;">
-            <a href="https://wa.me/201055719273" class="system-btn" style="flex: 1;">المطور I</a>
-            <a href="https://wa.me/96597805334" class="system-btn" style="flex: 1;">المطور II</a>
-        </div>
-
-        <div class="mيثاق-card">
-            <h2>📜 ميثاق الظلال (القوانين)</h2>
-            <ul class="rules-list">
-                <li>• هذا النظام هبة مجانية، لا يمكن بيعه أو شراؤه.</li>
-                <li>• محاولة اختراق البروتوكولات تعني النفي الفوري.</li>
-                <li>• الاحترام متبادل بين جميع الرتب في الفيلق.</li>
-                <li>• القوة مسؤولية، لا تستخدم البوت للإزعاج.</li>
-            </ul>
-            <div class="warning">
-                ⚠️ [تحذير النظام]: مخالفة الشروط تؤدي إلى سحب الصلاحيات نهائياً.. "النهوض" ليس للضعفاء.
+        <div class="rules-section">
+            <h2>📜 ميثاق الظلال (القوانين الصارمة)</h2>
+            <p>1. النظام مُقدّم كمنحة مجانية؛ محاولة بيعه خيانة للفيلق.</p>
+            <p>2. أي تلاعب بالأكواد أو محاولة تخريب سيواجه بالحظر الفوري.</p>
+            <p>3. الاحترام هو أساس القوة؛ من لا يحترم المستخدمين ليس له مكان بيننا.</p>
+            <div class="warning-footer">
+                ⚠️ [SYSTEM NOTIFICATION]: لو لاحظنا أنك خالفت شرطاً سوف نسحب البوت منك فوراً!
             </div>
         </div>
     </div>
 
-    <footer>DESIGNED FOR THE MONARCHS</footer>
+    <footer style="padding: 50px; opacity: 0.3; font-size: 10px;">LEVELING UP SINCE 2024</footer>
 
+    <script>
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.01;
+            }
+            draw() {
+                ctx.fillStyle = '#a855f7';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+                if (particlesArray[i].size <= 0.2) {
+                    particlesArray.splice(i, 1);
+                    i--;
+                    particlesArray.push(new Particle());
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        init();
+        animate();
+    </script>
 </body>
 </html>
