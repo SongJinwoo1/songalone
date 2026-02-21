@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐁𝐎𝐓 𝐒𝐨𝐧𝐠 𝐉𝐢𝐧 𝐖𝐨𝐨 | 𝕊𝕪𝕤𝕥𝕖𝕞</title>
+    <title>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐 | 𝕊𝕪𝕤𝕥𝕖𝕞</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --shadow-purple: #7c3aed;
             --main-glow: #a855f7;
             --dark-bg: #030014;
+            --glass-bg: rgba(255, 255, 255, 0.03);
         }
 
-        /* تأثير الخلفية المتحركة */
         body {
             margin: 0;
             background: var(--dark-bg);
             color: white;
             font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
         }
 
         canvas {
@@ -30,110 +31,91 @@
             z-index: -1;
         }
 
-        /* الهيكل الرئيسي */
         .dashboard {
             width: 90%;
-            max-width: 1000px;
-            margin-top: 50px;
-            animation: fadeIn 1.5s ease-out;
+            max-width: 600px;
+            text-align: center;
+            z-index: 10;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* رأس الصفحة (الهوية) */
+        /* تنسيق الهيدر الثابت */
         header {
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(124, 58, 237, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
             margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
         }
 
         .avatar {
-            width: 150px; height: 150px;
+            width: 130px; height: 130px;
             border-radius: 20px;
             border: 2px solid var(--shadow-purple);
             box-shadow: 0 0 30px var(--shadow-purple);
-            transition: 0.5s;
         }
-        .avatar:hover { transform: scale(1.1) rotate(5deg); }
 
         h1 {
-            font-size: 35px;
-            margin: 15px 0;
-            letter-spacing: 2px;
+            font-size: 28px;
+            margin: 10px 0;
             background: linear-gradient(to bottom, #fff, var(--main-glow));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* شبكة المميزات (النظام الواسع) */
-        .system-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        /* القائمة الرئيسية */
+        .main-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .system-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        /* الأقسام المخفية */
+        .page-content {
+            display: none;
+            background: var(--glass-bg);
+            border: 1px solid rgba(124, 58, 237, 0.2);
             padding: 25px;
             border-radius: 20px;
-            transition: 0.4s;
-            position: relative;
-            overflow: hidden;
+            backdrop-filter: blur(15px);
+            animation: zoomIn 0.5s ease forwards;
+            text-align: right;
         }
 
-        .system-card:hover {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--shadow-purple);
-            transform: translateY(-5px);
-        }
-
-        .system-card h3 { color: var(--main-glow); margin-top: 0; }
-
-        /* الأزرار الاحترافية */
-        .action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
+        /* أزرار النظام */
+        .system-btn {
+            padding: 18px;
             background: linear-gradient(45deg, #1e1b4b, #4c1d95);
             color: white;
             text-decoration: none;
             border-radius: 12px;
             font-weight: bold;
-            margin-top: 10px;
             border: 1px solid var(--shadow-purple);
+            cursor: pointer;
             transition: 0.3s;
+            font-size: 16px;
         }
-        .action-btn:hover {
+
+        .system-btn:hover {
             box-shadow: 0 0 20px var(--shadow-purple);
-            filter: brightness(1.2);
+            transform: scale(1.02);
         }
 
-        /* ميثاق الظلال */
-        .rules-section {
-            margin-top: 40px;
-            background: rgba(255, 0, 0, 0.02);
-            border: 1px solid rgba(255, 0, 0, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: right;
-        }
-
-        .rules-section h2 { color: #f87171; border-bottom: 1px solid rgba(248, 113, 113, 0.2); padding-bottom: 10px; }
-
-        .warning-footer {
+        .back-btn {
             margin-top: 20px;
-            color: #ef4444;
-            font-size: 13px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 8px;
         }
+
+        /* أنيميشن */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        .active { display: block !important; }
+        .hidden { display: none !important; }
+
+        footer { margin-top: 40px; opacity: 0.3; font-size: 10px; letter-spacing: 2px; }
     </style>
 </head>
 <body>
@@ -144,45 +126,54 @@
         <header>
             <img src="photo_5821173209150196869_y.jpg" alt="Song" class="avatar">
             <h1>𝑩𝑶𝑻 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐</h1>
-            <div style="color: var(--main-glow); font-weight: bold;">[ 𝕄𝕒𝕤𝕥𝕖𝕣: 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐 ]</div>
         </header>
 
-        <div class="system-grid">
-            <div class="system-card">
-                <h3>⚡ حالة النظام</h3>
-                <p>البوت يعمل بكفاءة 100%. نظام الاستدعاء جاهز لتنفيذ الأوامر في محادثات الواتساب.</p>
-                <a href="https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw" class="action-btn">دخول ساحة الاختبار</a>
-            </div>
-
-            <div class="system-card">
-                <h3> Eagle Eye 🦅</h3>
-                <p>تابع تحركات الظلال وآخر التحديثات البرمجية فور صدورها من القناة الرسمية.</p>
-                <a href="https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G" class="action-btn">قناة الأخبار</a>
-            </div>
-
-            <div class="system-card" style="grid-column: span 1;">
-                <h3>🛠️ استدعاء المطورين</h3>
-                <div style="display: flex; gap: 10px;">
-                    <a href="https://wa.me/201055719273" class="action-btn" style="flex:1">مطور I</a>
-                    <a href="https://wa.me/96597805334" class="action-btn" style="flex:1">مطور II</a>
-                </div>
-            </div>
+        <div id="mainMenu" class="main-menu">
+            <button class="system-btn" onclick="showPage('aboutBot')">⚙️ تعرف على البوت</button>
+            <button class="system-btn" onclick="showPage('aboutUs')">👤 تعرف علينا</button>
+            <button class="system-btn" onclick="window.location.href='https://chat.whatsapp.com/JILd7b6sW0JFk4bYPVzRrw'">⚡ ساحة الاختبار</button>
+            <button class="system-btn" onclick="window.location.href='https://whatsapp.com/channel/0029VbCMlkj2ER6nzLnwpO3G'">🦅 قناة الأخبار</button>
+            <button class="system-btn" onclick="showPage('contactDev')" style="background: #25d366; border-color: #128c7e;">🛠️ استدعاء المطور</button>
         </div>
 
-        <div class="rules-section">
-            <h2>📜 ميثاق الظلال (القوانين الصارمة)</h2>
-            <p>1. النظام مُقدّم كمنحة مجانية؛ محاولة بيعه خيانة للفيلق.</p>
-            <p>2. أي تلاعب بالأكواد أو محاولة تخريب سيواجه بالحظر الفوري.</p>
-            <p>3. الاحترام هو أساس القوة؛ من لا يحترم المستخدمين ليس له مكان بيننا.</p>
-            <div class="warning-footer">
-                ⚠️ [SYSTEM NOTIFICATION]: لو لاحظنا أنك خالفت شرطاً سوف نسحب البوت منك فوراً!
-            </div>
+        <div id="aboutBot" class="page-content">
+            <h2 style="color: var(--main-glow);">⚙️ عن النظام</h2>
+            <p>بوت سونغ جين وو هو نظام استدعاء آلي متطور يعمل عبر الواتساب. تم برمجته ليكون الأسرع في تنفيذ الأوامر، وحماية المجموعات من التطفل، وتوفير أدوات ذكاء اصطناعي تفاعلية لكل الصيادين.</p>
+            <button class="back-btn" onclick="showMenu()">🔙 العودة للنظام</button>
         </div>
+
+        <div id="aboutUs" class="page-content">
+            <h2 style="color: var(--main-glow);">👤 فيلق الظلال</h2>
+            <p>نحن كيان برمجي يسعى لتطوير أدوات تواصل فريدة. بقيادة المطور 𝑺𝒐𝒏𝒈 𝑱𝒊𝒏 𝑾𝒐𝒐، نعمل على دمج المتعة بالتقنية لخلق تجربة مستخدم لا تُنسى في عالم الواتساب.</p>
+            <button class="back-btn" onclick="showMenu()">🔙 العودة للنظام</button>
+        </div>
+
+        <div id="contactDev" class="page-content" style="text-align: center;">
+            <h2 style="color: #25d366;">🛠️ سيد الظلال</h2>
+            <p>المطور الرسمي والمسؤول عن تحديثات النظام.</p>
+            <a href="https://wa.me/96597805334" class="system-btn" style="display: block; background: #25d366;">بدء المحادثة الآن</a>
+            <button class="back-btn" onclick="showMenu()">🔙 العودة للنظام</button>
+        </div>
+
+        <footer>LEVELING UP SYSTEM v3.0</footer>
     </div>
 
-    <footer style="padding: 50px; opacity: 0.3; font-size: 10px;">LEVELING UP SINCE 2024</footer>
-
     <script>
+        // وظيفة التنقل بين الصفحات
+        function showPage(pageId) {
+            document.getElementById('mainMenu').classList.add('hidden');
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function showMenu() {
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById('mainMenu').classList.remove('hidden');
+        }
+
+        // سكريبت الجزيئات (Particles)
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -193,17 +184,17 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
+                this.size = Math.random() * 2 + 0.5;
                 this.speedX = Math.random() * 1 - 0.5;
                 this.speedY = Math.random() * 1 - 0.5;
+                this.alpha = Math.random();
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                if (this.size > 0.2) this.size -= 0.01;
             }
             draw() {
-                ctx.fillStyle = '#a855f7';
+                ctx.fillStyle = `rgba(168, 85, 247, ${this.alpha})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -220,11 +211,6 @@
             for (let i = 0; i < particlesArray.length; i++) {
                 particlesArray[i].update();
                 particlesArray[i].draw();
-                if (particlesArray[i].size <= 0.2) {
-                    particlesArray.splice(i, 1);
-                    i--;
-                    particlesArray.push(new Particle());
-                }
             }
             requestAnimationFrame(animate);
         }
